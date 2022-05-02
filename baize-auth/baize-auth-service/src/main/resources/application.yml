@@ -1,0 +1,31 @@
+#服务的端口和路径地址
+server:
+  port: 36002
+  servlet:
+    context-path: /bz_auth
+#加密解密
+jasypt:
+  encryptor:
+    algorithm: PBEWithMD5AndDES
+    password: 123456
+#spring配置
+spring:
+  main:
+    #允许存在多个Feign调用
+    allow-bean-definition-overriding: true
+  application:
+    name: baize-auth-server
+  profiles:
+    active: ${active:local}
+
+#springboot监控Actuator
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+#日志配置
+logback:
+  logdir: /baize/${spring.application.name}
+  appname: ${spring.application.name}
+

@@ -1,0 +1,8 @@
+package $daoPackage;
+
+import com.wisdom.app.service.common.dao.BaseMapper;
+import $entityClassName;
+
+public interface $daoName extends BaseMapper<$entityName> {
+
+}

@@ -1,0 +1,8 @@
+package $servicePackage;
+
+import com.wisdom.app.service.common.service.BaseService;
+import $dtoClassName;
+
+public interface $serviceName extends BaseService<$dtoName> {
+
+}

@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+    <!--
+        (1) groupId：存储的包的路径，一般分为多段，第一段为域，第二段为公司名。。。。。。如图，org是域中的一个，和它类似的
+        还有com、cn等，org为非盈利组织，com为商业组织。
+        (2) artifactId：模块名 它们统称为坐标，是为了保证项目的唯一性提出的，如果把自己的项目弄到maven本地仓库去，必须通过groupId+artifactId去查找。
+        (3) version 它是用来声明版本号的。在父pom中通常将一些通用的组件的版本号抽取出来，统一做版本号管理，当再次用到这个组件时就不用再去声明版本号了，
+            这样做还可以避免因为组件版本不一致带来的冲突问题。
+    -->
+    <groupId>com.baize</groupId>
+    <artifactId>baize-parent</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <!--
+        以下配置<packaging>pom</packaging>的意思是使用maven分模块管理，都会有一个父级项目，
+        pom文件一个重要的属性就是packaging（打包类型），一般来说所有的父级项目的packaging都为pom，
+        packaging默认类型jar类型，如果不做配置，maven会将该项目打成jar包
+    -->
+    <packaging>pom</packaging>
+
+    <!--这里设置版本号，父类做版本统一管理 properties里面可以定义用户自己的属性值,这些属性值可以在POM文件的任何地方同通过${x}的方式来引用 -->
+    <properties>
+        <!--java版本18：该版本比较稳定，使用者较多，兼容性较好 -->
+        <java.version>1.8</java.version>
+        <!--springboot版本 -->
+        <spring-boot.version>2.6.6</spring-boot.version>
+        <!--spring-cloud版本-->
+        <spring-cloud.version>2021.0.1</spring-cloud.version>
+        <!-- Spring Cloud Alibaba 致力于提供微服务开发的一站式解决方案。
+            此项目包含开发分布式应用微服务的必需组件，方便开发者通过 Spring Cloud 编程模型轻松使用这些组件来开发分布式应用服务
+        -->
+        <cloud.alibaba.version>2021.0.1.0</cloud.alibaba.version>
+        <!--swagger3接口API文档生成 -->
+        <springfox.swagger3.version>3.0.0</springfox.swagger3.version>
+        <!--swagger UI界面 bootstrap-ui-->
+        <swagger-bootstrap-ui.version>1.9.6</swagger-bootstrap-ui.version>
+        <!--swagger UI界面 knife4j；knife4j和 bootstrap-ui 两个选择一个，选择knife4j-->
+        <swagger-knife4j.version>3.0.3</swagger-knife4j.version>
+
+        <spring-admin-server.version>2.6.6</spring-admin-server.version>
+
+        <!-- fastjson依赖是阿里巴巴提供的用于处理json-object数据转换。接收前端传过来的json参数数据，转换成Java对象-->
+        <fastjson.version>1.2.70</fastjson.version>
+        <!--lombok依赖 Lombok的原理是在编译生成AST之后，根据注解对AST进行修改，比如增加上Getter、Setter方法，然后用修改后的AST生成字节码。-->
+        <lombok.version>1.18.8</lombok.version>
+        <!--jasypt加密解密配置文件 -->
+        <jasypt.version>2.0.0</jasypt.version>
+        <!--JJWT鉴权（JSON Web Token）:用户登录使用taken -->
+        <jjwt.version>0.9.1</jjwt.version>
+
+        <!-- 常用的时间处理类库 -->
+        <joda-time.version>2.10.8</joda-time.version>
+        <!-- 阿里云短信接口sdk -->
+        <aliyun-java-sdk-dysmsapi.version>2.1.0</aliyun-java-sdk-dysmsapi.version>
+        <!-- Hutool 是一个小而全的 Java 工具类库-->
+        <hutool.version>4.5.6</hutool.version>
+        <!--commons工具包-->
+        <commons-lang3.version>3.9</commons-lang3.version>
+        <!--jackson Java Json解析器-->
+        <jackson.version>2.10.3</jackson.version>
+        <!-- 开源对象池化组件-->
+        <commons-pool2.version>2.6.2</commons-pool2.version>
+        <!-- Google guava工具类的介绍和使用 -->
+        <google-guava.version>31.1-jre</google-guava.version>
+        <!-- 校验工具 后台开发需要对对象的传进来的参数进行校验 -->
+        <javax.validation.version>2.0.1.Final</javax.validation.version>
+        <!-- MyBatis-Spring-Boot-Starter类似一个中间件，链接Spring Boot和MyBatis，构建基于Spring Boot的MyBatis应用程序-->
+        <mybatis.spring.boot.version>1.3.0</mybatis.spring.boot.version>
+        <!-- mybatis-paginator是gethub上的一个开源项目、用于java后台获取分页数据、该开源项目还提供一个列表组件（mmgrid）用于前端展示 -->
+        <mybatis-paginator.version>1.2.8</mybatis-paginator.version>
+        <!-- commons-beanutils是Apache开源组织提供的用于操作JAVA BEAN的工具包 -->
+        <commons-beanutils.version>1.9.3</commons-beanutils.version>
+
+    </properties>
+    <!-- dependencyManagement只在父工程（即pom类型的maven工程）中声明，在子工程中定义无需声明版本从而生效 -->
+    <dependencyManagement>
+        <dependencies>
+            <!-- spring-cloud配置依赖-->
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!-- spring-boot配置 -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring-boot.version}</version>
+                <!-- 为了解决子工程单继承的问题，通过<type>pom</type>可以依赖于其他的pom父工程，从而将pom工程中的依赖都传递过来 -->
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!--
+                Spring Cloud Alibaba 致力于提供微服务开发的一站式解决方案。
+                此项目包含开发分布式应用微服务的必需组件，方便开发者通过 Spring Cloud 编程模型轻松使用这些组件来开发分布式应用服务
+             -->
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+                <version>${cloud.alibaba.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!--swagger3接口API文档依赖 -->
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-boot-starter</artifactId>
+                <version>${springfox.swagger3.version}</version>
+            </dependency>
+
+            <!--swagger-ui  这里是用了一个好看一点ui界面-->
+            <!--<dependency>
+                <groupId>com.github.xiaoymin</groupId>
+                <artifactId>swagger-bootstrap-ui</artifactId>
+                <version>${swagger-bootstrap-ui.version}</version>
+            </dependency>-->
+
+            <dependency>
+                <groupId>com.github.xiaoymin</groupId>
+                <artifactId>knife4j-spring-boot-starter</artifactId>
+                <version>${swagger-knife4j.version}</version>
+            </dependency>
+
+            <!--Spring Boot Admin监控中心服务端 -->
+            <dependency>
+                <groupId>de.codecentric</groupId>
+                <artifactId>spring-boot-admin-starter-server</artifactId>
+                <version>${spring-admin-server.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>de.codecentric</groupId>
+                <artifactId>spring-boot-admin-server-ui</artifactId>
+                <version>${spring-admin-server.version}</version>
+            </dependency>
+            <!--这个包是作图形化服务端监控客户端：如果不用图形化客户端就不要导这个包-->
+            <dependency>
+                <groupId>de.codecentric</groupId>
+                <artifactId>spring-boot-admin-starter-client</artifactId>
+                <version>${spring-admin-server.version}</version>
+            </dependency>
+            <!-- fastjson依赖是阿里巴巴提供的用于处理json-object数据转换。接收前端传过来的json参数数据，转换成Java对象 -->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>${fastjson.version}</version>
+            </dependency>
+            <!--lombok依赖 Lombok的原理是在编译生成AST之后，根据注解对AST进行修改，比如增加上Getter、Setter方法，然后用修改后的AST生成字节码。-->
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
+                <optional>true</optional>
+            </dependency>
+            <!--jasypt加密解密依赖 -->
+            <dependency>
+                <groupId>com.github.ulisesbocchio</groupId>
+                <artifactId>jasypt-spring-boot-starter</artifactId>
+                <version>${jasypt.version}</version>
+            </dependency>
+            <!--JJWT鉴权（JSON Web Token）:用户登录使用taken -->
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt</artifactId>
+                <version>${jjwt.version}</version>
+            </dependency>
+
+            <!-- 常用的时间处理类库 -->
+            <dependency>
+                <groupId>joda-time</groupId>
+                <artifactId>joda-time</artifactId>
+                <version>${joda-time.version}</version>
+            </dependency>
+            <!-- 阿里云短信接口sdk -->
+            <dependency>
+                <groupId>com.aliyun</groupId>
+                <artifactId>aliyun-java-sdk-dysmsapi</artifactId>
+                <version>${aliyun-java-sdk-dysmsapi.version}</version>
+            </dependency>
+            <!-- Hutool 是一个小而全的 Java 工具类库-->
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-all</artifactId>
+                <version>${hutool.version}</version>
+            </dependency>
+            <!--commons工具包-->
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>${commons-lang3.version}</version>
+            </dependency>
+
+            <!--jackson Java Json解析器-->
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-annotations</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-core</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.dataformat</groupId>
+                <artifactId>jackson-dataformat-xml</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.module</groupId>
+                <artifactId>jackson-module-jaxb-annotations</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+            <!--jackson Java Json解析器-->
+
+            <!-- 开源对象池化组件-->
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-pool2</artifactId>
+                <version>${commons-pool2.version}</version>
+            </dependency>
+
+            <!-- Google guava工具类的介绍和使用 -->
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>${google-guava.version}</version>
+            </dependency>
+            <!-- 校验工具 后台开发需要对对象的传进来的参数进行校验 -->
+            <dependency>
+                <groupId>javax.validation</groupId>
+                <artifactId>validation-api</artifactId>
+                <version>${javax.validation.version}</version>
+            </dependency>
+            <!-- mybatis-paginator是gethub上的一个开源项目、用于java后台获取分页数据、该开源项目还提供一个列表组件（mmgrid）用于前端展示 -->
+            <dependency>
+                <groupId>com.github.miemiedev</groupId>
+                <artifactId>mybatis-paginator</artifactId>
+                <version>${mybatis-paginator.version}</version>
+            </dependency>
+            <!-- MyBatis-Spring-Boot-Starter类似一个中间件，链接Spring Boot和MyBatis，构建基于Spring Boot的MyBatis应用程序-->
+            <dependency>
+                <groupId>org.mybatis.spring.boot</groupId>
+                <artifactId>mybatis-spring-boot-starter</artifactId>
+                <version>${mybatis.spring.boot.version}</version>
+            </dependency>
+            <!-- commons-beanutils是Apache开源组织提供的用于操作JAVA BEAN的工具包 -->
+            <dependency>
+                <groupId>commons-beanutils</groupId>
+                <artifactId>commons-beanutils</artifactId>
+                <version>${commons-beanutils.version}</version>
+            </dependency>
+
+        </dependencies>
+    </dependencyManagement>
+    <build>
+        <pluginManagement>
+            <plugins>
+                <!-- maven打包指定jdk版本 -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <configuration>
+                        <source>${java.version}</source>
+                        <target>${java.version}</target>
+                    </configuration>
+                </plugin>
+                <!-- maven测试框架的依赖-->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>2.22.2</version>
+                    <configuration>
+                        <skip>true</skip>
+                    </configuration>
+                </plugin>
+                <!-- maven 打war包配置：failOnMissingWebXml=false避免缺少web.xml导致failOnMissingWebXml错误-->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-war-plugin</artifactId>
+                    <version>3.2.3</version>
+                    <configuration>
+                        <failOnMissingWebXml>false</failOnMissingWebXml>
+                    </configuration>
+                </plugin>
+                <!-- maven打jar包依赖 -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>3.1.2</version>
+                </plugin>
+                <!-- 将spring boot的应用程序打包-->
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                    <version>${spring-boot.version}</version>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>repackage</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <!-- 插件主要是用来打包源代码的-->
+                <plugin>
+                    <artifactId>maven-source-plugin</artifactId>
+                    <version>2.1</version>
+                    <configuration>
+                        <attach>true</attach>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <phase>compile</phase>
+                            <goals>
+                                <goal>jar</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+        <!--解决资源导出问题-->
+        <resources>
+            <resource>
+                <directory>src/main/java</directory>
+                <includes>
+                    <include>**/*.properties</include>
+                    <include>**/*.xml</include>
+                </includes>
+                <filtering>false</filtering>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>**/*.properties</include>
+                    <include>**/*.xml</include>
+                    <include>**/*.yml</include>
+                </includes>
+                <filtering>false</filtering>
+            </resource>
+        </resources>
+    </build>
+
+</project>

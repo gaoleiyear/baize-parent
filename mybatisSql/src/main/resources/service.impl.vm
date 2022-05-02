@@ -1,0 +1,17 @@
+package $serviceImplPackage;
+
+import org.springframework.stereotype.Service;
+import com.wisdom.app.service.common.service.impl.BaseServiceImpl;
+import $daoClassName;
+import $serviceClassName;
+import $dtoClassName;
+import $entityClassName;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+@Service
+public class $serviceImplName extends BaseServiceImpl<$dtoName, $daoName, $entityName> implements $serviceName {
+
+
+
+}

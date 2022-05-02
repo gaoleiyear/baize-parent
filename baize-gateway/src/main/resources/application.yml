@@ -1,0 +1,30 @@
+
+#服务端口
+server:
+  port: 36001
+
+#服务名
+
+spring:
+  application:
+    name: baize-gateway
+  #gateway路由
+  cloud:
+    gateway:
+      locator:
+        enabled: true #表明gateway开启服务注册和发现的功能， 动态路由
+        lowerCaseServiceId: true
+      routes:
+        - id: baize-auth-service
+          uri: lb://baize-auth-service
+          order: 1
+          predicates:
+            - Path=/bz_auth/**
+          filters:
+            - StripPrefix=0
+#文件分区配置
+  profiles:
+    active: ${active:local}
+feign:
+  hystrix:
+    enabled: true

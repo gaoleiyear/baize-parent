@@ -1,0 +1,17 @@
+#nacos注册中心配置
+spring:
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+        file-extension: yaml #指定yaml格式的配置
+#swaggerAPI文档配置
+springfox:
+  documentation:
+    enabled: true
+  open-api:
+    v3:
+      path: /${spring.application.name}/v3/api-docs
+#SWAGGER
+gateWaySwagger:
+  enable: true

@@ -1,0 +1,26 @@
+package $paramPackage;
+
+#if($table.dataTypeSet)
+    #foreach($item in $table.dataTypeSet)
+    import $item;
+    #end
+#end
+import com.wisdom.app.service.common.param.QueryParam;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class $paramName implements QueryParam {
+#if($table.columnKey)
+
+private $table.columnKey.propertyDataType $table.columnKey.propertyName;
+#end
+#foreach($item in $table.columnList)
+private $item.propertyDataType $item.propertyName;
+#end
+}
